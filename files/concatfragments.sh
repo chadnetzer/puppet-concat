@@ -58,40 +58,40 @@ while getopts "o:s:d:tnwf" options; do
 		f ) FORCE="true";;
 		t ) TEST="true";;
 		* ) echo "Specify output file with -o and fragments directory with -d"
-		    exit 1;;
+		    exit 80;;
 	esac
 done
 
 # do we have -o?
 if [ -z "${OUTFILE}" ]; then
 	echo "Please specify an output file with -o"
-	exit 1
+	exit 82
 fi
 
 # do we have -d?
 if [ -z "${WORKDIR}" ]; then
 	echo "Please fragments directory with -d"
-	exit 1
+	exit 84
 fi
 
 # can we write to -o?
 if [ -a "${OUTFILE}" ]; then
 	if [ ! -w "${OUTFILE}" ]; then
 		echo "Cannot write to ${OUTFILE}"
-		exit 1
+		exit 86
 	fi
 else
 	OUTFILE_DIR=`dirname "$OUTFILE"`
 	if [ ! -w "${OUTFILE_DIR}" ]; then
 		echo "Cannot write to ${OUTFILE_DIR} to create ${OUTFILE}"
-		exit 1
+		exit 88
 	fi
 fi
 
 # do we have a fragments subdir inside the work dir?
 if [ ! -d "${WORKDIR}/fragments" ]  && [ ! -x "${WORKDIR}/fragments" ]; then
 	echo "Cannot access the fragments directory"
-	exit 1
+	exit 90
 fi
 
 # are there actually any fragments?
@@ -99,7 +99,7 @@ FRAGLIST=$(ls -A "${WORKDIR}/fragments")
 if [ ! "$FRAGLIST" ]; then
 	if [ -z ${FORCE} ]; then
 		echo "The fragments directory is empty, cowardly refusing to make empty config files"
-		exit 1
+		exit 92
 	fi
 fi
 
