@@ -147,7 +147,7 @@ define concat($mode = 0644, $owner = "root", $group = "root", $warn = "false", $
         notify    => File[$name],
         subscribe => File[$fragdir],
         alias     => "concat_${fragdir}",
-        require   => [ File["/usr/local/bin/concatfragments.sh"], File[$fragdir], File["${fragdir}/fragments"], File["${fragdir}/fragments.concat"] ],
+        require   => [ File["concatfragments.sh"], File[$fragdir], File["${fragdir}/fragments"], File["${fragdir}/fragments.concat"] ],
         unless    => "/usr/local/bin/concatfragments.sh -o ${fragdir}/${concat_name} -d ${fragdir} -t ${warnflag} ${forceflag}",
         command   => "/usr/local/bin/concatfragments.sh -o ${fragdir}/${concat_name} -d ${fragdir} ${warnflag} ${forceflag}",
     }

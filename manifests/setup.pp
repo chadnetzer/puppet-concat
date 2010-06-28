@@ -17,6 +17,7 @@ class concat::setup {
     $majorversion = regsubst($puppetversion, '^[0-9]+[.]([0-9]+)[.][0-9]+$', '\1')
 
     file{"/usr/local/bin/concatfragments.sh": 
+            alias  => "concatfragments.sh",
             owner  => root,
             group  => root,
             mode   => 755,
